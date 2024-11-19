@@ -23,4 +23,10 @@ void deinit();
 
 void run();
 
+namespace Input {
+
+void keydown(SDL_KeyboardEvent& key);
+
+}
+
 }

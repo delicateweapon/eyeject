@@ -63,6 +63,7 @@ void App::run()
                 running = false;
                 break;
             case SDL_EVENT_KEY_DOWN:
+                Input::keydown(event.key);
                 break;
             default:
                 break;
