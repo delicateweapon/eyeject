@@ -8,10 +8,18 @@ int main(void)
         return -1;
     }
 
-    SDL_SetRenderDrawColor(App::renderer, 220, 110, 200, 255);
-    SDL_RenderClear(App::renderer);
-    SDL_RenderPresent(App::renderer);
-    
+    App::set_window_color(0x6aa1cc);
+
+    App::set_color(0xf8f2f2);
+
+    App::draw_line(100, 100, 100, 200);
+    App::draw_line(100, 100, 200, 100);
+    App::draw_line(200, 100, 100, 150);
+    App::draw_line(100, 150, 200, 200);
+    App::draw_line(200, 200, 100, 200);
+
+    App::update();
+
     App::run();
 
     App::deinit();

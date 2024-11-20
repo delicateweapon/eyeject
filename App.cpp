@@ -69,3 +69,8 @@ void App::run()
         }
     }
 }
+
+void App::update() 
+{
+    SDL_RenderPresent(renderer);    
+}

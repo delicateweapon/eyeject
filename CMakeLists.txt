@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.29)
 project(eyeject)
 
-add_executable(eyeject main.cpp App.cpp Input.cpp)
+add_executable(eyeject main.cpp App.cpp Input.cpp Color.cpp Draw.cpp Point2D.cpp)
 
 target_include_directories(eyeject PRIVATE include)
 

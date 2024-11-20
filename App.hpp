@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Point2D.hpp"
+
 #include <string>
 #include <SDL3/SDL_render.h>
 #include <SDL3/SDL_events.h>
@@ -24,11 +26,21 @@ int init();
 void deinit();
 
 void run();
+void update();
 
 namespace Input {
 
 void keydown(SDL_KeyboardEvent& key);
 
 }
+
+void set_color(uint32_t hex);
+void set_window_color(uint32_t hex);
+
+/* you shall inline these, wont you sweet compiler? */
+void draw_line(float x0, float y0, float x1, float y1);
+void draw_line(float x0, float y0, float x1, float y1, uint32_t hex);
+void draw_line(Point2D& p1, Point2D& p2);
+void draw_line(Point2D& p1, Point2D& p2, uint32_t hex);
 
 }
