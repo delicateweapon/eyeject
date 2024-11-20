@@ -1,7 +1,5 @@
 #include "App.hpp"
 
-#include <SDL3/SDL_render.h>
-
 int main(void)
 {
     if (App::init() < 0) {
