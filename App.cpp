@@ -72,5 +72,8 @@ void App::run()
 
 void App::update() 
 {
+    for (Camera *cam: Camera::cameras) {
+        App::camera_render(*cam);
+    }
     SDL_RenderPresent(renderer);    
 }

@@ -44,7 +44,8 @@ void draw_line(float x0, float y0, float x1, float y1, uint32_t hex);
 void draw_line(Point2D& p1, Point2D& p2);
 void draw_line(Point2D& p1, Point2D& p2, uint32_t hex);
 
-void render_camera(Camera& cam);
+void camera_add(Camera& cam);
+void camera_render(Camera& cam);
 
 }
 

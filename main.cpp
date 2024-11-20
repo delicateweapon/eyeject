@@ -22,8 +22,8 @@ int main(void)
     cam0.look_angle = - PI / 2;
     cam0.position = Point2D(App::Window::width / 2.0, App::Window::height / 2.0);
 
+    App::camera_add(cam0);
     Camera::select(cam0);
-    App::render_camera(cam0);
 
     App::update();
 

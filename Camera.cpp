@@ -13,8 +13,6 @@ Camera::Camera(float fov, float look_angle, float far_length, Point2D position)
     this->far_length = far_length;
     this->position = position;
     this->selected = false;
-
-    Camera::cameras.push_back(this);
 }
 
 void Camera::select(Camera &cam)
@@ -27,10 +25,15 @@ void Camera::select(Camera &cam)
     selected_camera = &cam;
 }
 
-void App::render_camera(Camera &cam)
+void App::camera_add(Camera& cam)
+{
+    Camera::cameras.push_back(&cam);
+}
+
+void App::camera_render(Camera &cam)
 {
     if (cam.selected) {
-        set_color(0xbbe8b6);
+        set_color(0xff0000);
     } else {
         set_color(0xffffff);
     }
