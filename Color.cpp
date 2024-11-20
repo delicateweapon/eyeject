@@ -28,3 +28,8 @@ void App::set_window_color(uint32_t hex)
 
     SDL_RenderClear(renderer);
 }
+
+void App::set_default_window_color(uint32_t hex) 
+{
+    Window::default_color = hex;
+}

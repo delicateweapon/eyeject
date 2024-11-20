@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Point2D.hpp"
+#include "Direction.hpp"
 
 #include <vector>
 
@@ -22,6 +23,12 @@ public:
     void set_position(Point2D& p);
     void set_look_angle(float look_angle);
     void set_far_length(float far_length);
+
+    void move_x(float delta_x);
+    void move_y(float delta_y);
+
+    void move(float distance, Direction d);
+    void rotate(float delta_angle);
 
     void render();
 

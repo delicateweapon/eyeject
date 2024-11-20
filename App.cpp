@@ -10,6 +10,7 @@ namespace Window {
     std::string title;
     uint16_t width = 800;
     uint16_t height = 500;
+    uint32_t default_color;
 }
 
 SDL_Renderer *renderer;
@@ -68,11 +69,13 @@ void App::run()
                 break;
             }
         }
+        update();
     }
 }
 
 void App::update() 
 {
+    set_window_color(Window::default_color);
     for (Camera *cam: Camera::cameras) {
         cam->render();
     }

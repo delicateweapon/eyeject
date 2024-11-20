@@ -92,3 +92,45 @@ void Camera::render()
     draw_line(this->position, side1);
     draw_line(this->position, side2);
 }
+
+
+void Camera::move_x(float delta_x)
+{
+    this->position.x += delta_x;
+}
+
+void Camera::move_y(float delta_y)
+{
+    this->position.y += delta_y;
+}
+
+
+void Camera::move(float distance, Direction d)
+{
+    switch (d) {
+    case FORWARD:
+        this->position.x += distance * std::cos(this->look_angle);
+        this->position.y += distance * (-1) * std::sin(this->look_angle);
+        break;
+
+    case BACKWARD:
+        this->position.x -= distance * std::cos(this->look_angle);
+        this->position.y -= distance * (-1) * std::sin(this->look_angle);
+        break;
+
+    case RIGHT:
+        this->position.x += distance * std::sin(this->look_angle);
+        this->position.y += distance * (-1) * std::cos(this->look_angle);
+        break;
+
+    case LEFT:
+        this->position.x -= distance * std::sin(this->look_angle);
+        this->position.y -= distance * (-1) * std::cos(this->look_angle);
+        break;
+    }
+}
+
+void Camera::rotate(float delta_angle)
+{
+    this->look_angle += delta_angle;
+}
