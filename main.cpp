@@ -16,6 +16,15 @@ int main(void)
     App::draw_line(100, 150, 200, 200);
     App::draw_line(200, 200, 100, 200);
 
+    Camera cam0;
+    cam0.fov = 2 * PI / 3;
+    cam0.far_length = 100;
+    cam0.look_angle = - PI / 2;
+    cam0.position = Point2D(App::Window::width / 2.0, App::Window::height / 2.0);
+
+    Camera::select(cam0);
+    App::render_camera(cam0);
+
     App::update();
 
     App::run();
