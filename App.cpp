@@ -1,4 +1,5 @@
 #include "App.hpp"
+#include "Camera.hpp"
 
 #include <SDL3/SDL_init.h>
 
@@ -73,7 +74,7 @@ void App::run()
 void App::update() 
 {
     for (Camera *cam: Camera::cameras) {
-        App::camera_render(*cam);
+        cam->render();
     }
     SDL_RenderPresent(renderer);    
 }

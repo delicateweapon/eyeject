@@ -3,8 +3,10 @@
 
 #include <cmath>
 
+using namespace App;
+
 std::vector<Camera *> Camera::cameras;
-Camera *Camera::selected_camera;
+Camera *Camera::selected;
 
 Camera::Camera(float fov, float look_angle, float far_length, Point2D position)
 {
@@ -12,53 +14,81 @@ Camera::Camera(float fov, float look_angle, float far_length, Point2D position)
     this->look_angle = look_angle;
     this->far_length = far_length;
     this->position = position;
-    this->selected = false;
+    this->is_selected = false;
+}
+
+void Camera::update_values()
+{
+    this->head.x = this->position.x + this->far_length * std::cos(this->look_angle);
+    this->head.y = this->position.y + this->far_length * (-1) * std::sin(this->look_angle);
+
+
+    this->angle1 = this->look_angle - (this->fov / 2);
+    this->angle2 = this->look_angle + (this->fov / 2);
+    this->side_length = this->far_length / std::cos(this->fov / 2);
+
+    this->side1.x = this->position.x + this->side_length * std::cos(angle1);
+    this->side1.y = this->position.y + this->side_length * (-1) * std::sin(angle1);
+
+    this->side2.x = this->position.x + this->side_length * std::cos(angle2);
+    this->side2.y = this->position.y + this->side_length * (-1) * std::sin(angle2);
+}
+
+void Camera::set_fov(float fov)
+{
+    this->fov = fov;
+}
+
+void Camera::set_position(float x, float y)
+{
+    this->position.x = x;
+    this->position.y = y;
+}
+
+void Camera::set_position(Point2D &p)
+{
+    this->position = p;
+}
+
+void Camera::set_look_angle(float look_angle)
+{
+    this->look_angle = look_angle;
+}
+
+void Camera::set_far_length(float far_length)
+{
+    this->far_length = far_length;
 }
 
 void Camera::select(Camera &cam)
 {
     for (Camera *c : cameras) {
-        c->selected = false;
+        c->is_selected = false;
     }
 
-    cam.selected = true;
-    selected_camera = &cam;
+    cam.is_selected = true;
+    selected = &cam;
 }
 
-void App::camera_add(Camera& cam)
+void Camera::add(Camera &cam)
 {
     Camera::cameras.push_back(&cam);
 }
 
-void App::camera_render(Camera &cam)
+void Camera::render()
 {
-    if (cam.selected) {
+    this->update_values();
+
+    if (this->selected) {
         set_color(0xff0000);
     } else {
         set_color(0xffffff);
     }
 
-    Point2D head(cam.position.x, cam.position.y);
-    head.x += cam.far_length * std::cos(cam.look_angle);
-    head.y += cam.far_length * std::sin(cam.look_angle);
-
-    draw_line(cam.position, head);
+    draw_line(this->position, this->head);
 
     set_color(0xf8f2f2);
 
-    float angle1 = cam.look_angle - (cam.fov / 2);
-    float angle2 = cam.look_angle + (cam.fov / 2);
-
-    float side_length = cam.far_length / std::cos(cam.fov / 2);
-
-    Point2D side1(cam.position.x, cam.position.y);
-    side1.x += side_length * std::cos(angle1);
-    side1.y += side_length * std::sin(angle1);
-
-    Point2D side2(cam.position.x, cam.position.y);
-    side2.x += side_length * std::cos(angle2);
-    side2.y += side_length * std::sin(angle2);
-
-    draw_line(cam.position, side1);
-    draw_line(cam.position, side2);
+    draw_line(this->position, side1);
+    draw_line(this->position, side2);
 }
