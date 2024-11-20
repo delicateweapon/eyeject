@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.29)
-project(spark)
+project(eyeject)
 
-add_executable(spark main.cpp App.cpp Input.cpp)
+add_executable(eyeject main.cpp App.cpp Input.cpp)
 
-target_include_directories(spark PRIVATE include)
+target_include_directories(eyeject PRIVATE include)
 
-target_link_directories(spark PRIVATE lib)
-target_link_libraries(spark PRIVATE SDL3)
+target_link_directories(eyeject PRIVATE lib)
+target_link_libraries(eyeject PRIVATE SDL3)
