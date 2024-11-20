@@ -7,8 +7,8 @@ namespace App {
 namespace Window {
     SDL_Window *window;
     std::string title;
-    uint16_t width;
-    uint16_t height;
+    uint16_t width = 800;
+    uint16_t height = 500;
 }
 
 SDL_Renderer *renderer;
