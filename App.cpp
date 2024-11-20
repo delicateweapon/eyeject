@@ -2,16 +2,14 @@
 
 #include <SDL3/SDL_init.h>
 
-namespace App::Window {
-
-SDL_Window *window;
-std::string title;
-uint16_t width;
-uint16_t height;
-
-}
-
 namespace App {
+
+namespace Window {
+    SDL_Window *window;
+    std::string title;
+    uint16_t width;
+    uint16_t height;
+}
 
 SDL_Renderer *renderer;
 
@@ -27,7 +25,7 @@ int App::init()
         return -1;
     }
 
-    Window::window = SDL_CreateWindow(Window::title.c_str(), Window::width, Window::height, SDL_WINDOW_VULKAN);
+    Window::window = SDL_CreateWindow(Window::title.c_str(), Window::width, Window::height, SDL_WINDOW_BORDERLESS);
     if (Window::window == nullptr) {
         std::fprintf(stderr, "failed to create SDL window\n");
         SDL_Quit();
