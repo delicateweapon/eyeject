@@ -3,15 +3,40 @@
 #include "Garden.hpp"
 #include "constants.hpp"
 
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <ncurses.h>
-#include <pthread.h>
+#endif
 
-void *ncurses_func(void *args)
-{
+#include <thread>
+#include <format>
+
+void *console_func(void *args) {
+    bool quit = false;
+
+#ifdef _WIN32
+
+    while (!quit) {
+        App::Camera *cam0 = App::Camera::selected;
+
+        std::string output = std::format("Camera: Cam0\n"
+                                         "Position: (.x = %f, .y = %f)\n"
+                                         "Look Angle: %f radians\n"
+                                         "FOV: %f radians\n",
+                                         cam0->position.x, cam0->position.y, cam0->look_angle, cam0->fov);
+        if (GetAsyncKeyState('Q')) {
+            quit = true;
+        }
+
+        Sleep(100);
+    }
+
+#else
+
     initscr();
     timeout(100);
 
-    bool quit;
     int ch;
 
     App::Camera *cam0;
@@ -21,36 +46,38 @@ void *ncurses_func(void *args)
 
         cam0 = App::Camera::selected;
 
-        printw("Camera: Cam0\n");
-        printw("Position: (.x = %f, .y = %f)\n", cam0->position.x, cam0->position.y);
-        printw("Look Angle: %f radians\n", cam0->look_angle);
-        printw("FOV: %f radians\n", cam0->fov);
+        std::string output = std::format("Camera: Cam0\n"
+                                         "Position: (.x = %f, .y = %f)\n"
+                                         "Look Angle: %f radians\n"
+                                         "FOV: %f radians\n",
+                                         cam0->position.x, cam0->position.y, cam0->look_angle, cam0->fov);
+
+        printw("%s", output.c_str());
 
         ch = getch();
         switch (ch) {
-        case 'Q' - 'A' + 1:
-            quit = true;
-            break;
-        default:
-            break;
+            case 'Q' - 'A' + 1:
+                quit = true;
+                break;
+            default:
+                break;
         }
     }
 
     endwin();
-    return NULL;
+
+#endif
+    return nullptr;
 }
 
-int main(void)
-{
-
+int main() {
     using namespace App;
 
     if (init() < 0) {
         return -1;
     }
 
-    pthread_t ncurses_thread;
-    pthread_create(&ncurses_thread, NULL, ncurses_func, NULL);
+    std::thread console_thread([] { console_func(nullptr); });
 
     set_default_window_color(0x6aa1cc);
 
@@ -78,7 +105,7 @@ int main(void)
     run();
     deinit();
 
-    pthread_join(ncurses_thread, NULL);
+    console_thread.join();
 
     return 0;
 }
