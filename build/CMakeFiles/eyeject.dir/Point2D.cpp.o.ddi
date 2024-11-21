@@ -1,9 +1,0 @@
-{
-  "revision": 0,
-  "rules": [
-    {
-      "primary-output": "CMakeFiles/eyeject.dir/Point2D.cpp.o"
-    }
-  ],
-  "version": 1
-}

@@ -1,3 +1,0 @@
-/home/delicateweapon/docs/eyeject/build/CMakeFiles/eyeject.dir
-/home/delicateweapon/docs/eyeject/build/CMakeFiles/edit_cache.dir
-/home/delicateweapon/docs/eyeject/build/CMakeFiles/rebuild_cache.dir
