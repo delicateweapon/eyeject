@@ -7,6 +7,8 @@
 #include <ncurses.h>
 #endif
 
+#include <cstdio>
+
 void *console_func(void *args)
 {
     bool quit = false;

@@ -30,12 +30,17 @@ int main()
     cam0.set_fov(Constants::PI / 2);
     cam0.set_far_length(10);
     cam0.set_look_angle(Constants::PI / 2);
-    cam0.set_position(Window::width / 2.0, Window::height / 2.0);
+    cam0.place_at_window_center();
 
     Camera::add(cam0);
     Camera::select(cam0);
 
-    Garden::area_init();
+    Garden g0(0, 0, Window::width / 3, Window::height / 3, 15);
+    g0.surround_with_walls();
+    g0.place_at_window_center();
+
+    
+    Garden::add(g0);
 
     update();
     run();

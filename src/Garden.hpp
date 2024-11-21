@@ -1,17 +1,23 @@
 #pragma once
 
+#include "Object2D.hpp"
 #include <cstdint>
+#include <vector>
 
-namespace Garden {
+class Garden : public Object2D_Translate {
+public:
+    static std::vector<Garden *> gardens;
+    static void add(Garden& g);
+    
+    Garden(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t tile_size);
 
-namespace Area {
-  constexpr uint16_t width = 30;
-  constexpr uint16_t height = 20;
-  constexpr uint16_t tile_size = 15;
-  extern bool occupied[width][height];
-}
+    void render();
+    void surround_with_walls();
 
-void area_init();
-void area_render();
-  
-}
+private:
+    uint16_t row_count;
+    uint16_t col_count;
+    uint16_t tile_count;
+    uint16_t tile_size;
+    std::vector<bool> occupied;
+};

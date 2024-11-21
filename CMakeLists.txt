@@ -11,6 +11,7 @@ set(SOURCE_FILES
     src/Color.cpp
     src/Draw.cpp
     src/Point2D.cpp
+    src/Object2D.cpp
     src/Camera.cpp
     src/Garden.cpp
     src/Console.cpp
@@ -20,6 +21,7 @@ set(HEADER_FILES
     src/App.hpp
     src/Color.hpp
     src/Point2D.hpp
+    src/Object2D.hpp
     src/Camera.hpp
     src/Garden.hpp
     src/Console.hpp

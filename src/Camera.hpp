@@ -1,34 +1,26 @@
 #pragma once
 
 #include "Point2D.hpp"
-#include "Direction.hpp"
+#include "Object2D.hpp"
 
 #include <vector>
 
 namespace App {
 
-class Camera {
+class Camera : public Object2D {
 public:
     float fov;
-    float look_angle;
     float far_length;
-    Point2D position;
+    float near_length;
     bool is_selected;
 
     Camera() = default;
-    Camera(float fov, float look_angle, float far_length, Point2D position);
-
+    
     void set_fov(float fov);
-    void set_position(float x, float y);
-    void set_position(Point2D& p);
-    void set_look_angle(float look_angle);
     void set_far_length(float far_length);
-
-    void move_x(float delta_x);
-    void move_y(float delta_y);
-
-    void move(float distance, Direction d);
-    void rotate(float delta_angle);
+    void set_near_length(float near_length);
+    void set_segments(size_t segments);
+    size_t get_segments();
 
     void render();
 
@@ -36,9 +28,11 @@ public:
     static Camera *selected;
     static void select(Camera &cam);
 
-    static void add(Camera& cam);
+    static void add(Camera &cam);
 
 private:
+    std::vector<float> segments;
+    
     Point2D head;
     float side_length;
     float angle1, angle2;

@@ -8,20 +8,10 @@ using namespace App;
 std::vector<Camera *> Camera::cameras;
 Camera *Camera::selected;
 
-Camera::Camera(float fov, float look_angle, float far_length, Point2D position)
-{
-    this->fov = fov;
-    this->look_angle = look_angle;
-    this->far_length = far_length;
-    this->position = position;
-    this->is_selected = false;
-}
-
 void Camera::update_values()
 {
     this->head.x = this->position.x + this->far_length * std::cos(this->look_angle);
     this->head.y = this->position.y + this->far_length * (-1) * std::sin(this->look_angle);
-
 
     this->angle1 = this->look_angle - (this->fov / 2);
     this->angle2 = this->look_angle + (this->fov / 2);
@@ -39,25 +29,24 @@ void Camera::set_fov(float fov)
     this->fov = fov;
 }
 
-void Camera::set_position(float x, float y)
-{
-    this->position.x = x;
-    this->position.y = y;
-}
-
-void Camera::set_position(Point2D &p)
-{
-    this->position = p;
-}
-
-void Camera::set_look_angle(float look_angle)
-{
-    this->look_angle = look_angle;
-}
-
 void Camera::set_far_length(float far_length)
 {
     this->far_length = far_length;
+}
+
+void Camera::set_near_length(float near_length)
+{
+    this->near_length = near_length;
+}
+
+void Camera::set_segments(size_t segments)
+{
+    this->segments.reserve(segments);
+}
+
+size_t Camera::get_segments()
+{
+    return this->segments.size();
 }
 
 void Camera::select(Camera &cam)
@@ -93,44 +82,3 @@ void Camera::render()
     draw_line(this->position, side2);
 }
 
-
-void Camera::move_x(float delta_x)
-{
-    this->position.x += delta_x;
-}
-
-void Camera::move_y(float delta_y)
-{
-    this->position.y += delta_y;
-}
-
-
-void Camera::move(float distance, Direction d)
-{
-    switch (d) {
-    case FORWARD:
-        this->position.x += distance * std::cos(this->look_angle);
-        this->position.y += distance * (-1) * std::sin(this->look_angle);
-        break;
-
-    case BACKWARD:
-        this->position.x -= distance * std::cos(this->look_angle);
-        this->position.y -= distance * (-1) * std::sin(this->look_angle);
-        break;
-
-    case RIGHT:
-        this->position.x += distance * std::sin(this->look_angle);
-        this->position.y += distance * (-1) * std::cos(this->look_angle);
-        break;
-
-    case LEFT:
-        this->position.x -= distance * std::sin(this->look_angle);
-        this->position.y -= distance * (-1) * std::cos(this->look_angle);
-        break;
-    }
-}
-
-void Camera::rotate(float delta_angle)
-{
-    this->look_angle += delta_angle;
-}

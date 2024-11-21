@@ -77,7 +77,9 @@ void App::run()
 void App::update() 
 {
     set_window_color(Window::default_color);
-    Garden::area_render();
+    for (Garden *g: Garden::gardens) {
+        g->render();
+    }
     for (Camera *cam: Camera::cameras) {
         cam->render();
     }
