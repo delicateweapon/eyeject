@@ -7,8 +7,8 @@
 class Object2D_Translate {
 public:
     Point2D position;
-    uint16_t width;
-    uint16_t height;
+    uint16_t width = 0;
+    uint16_t height = 0;
 
     Object2D_Translate() = default;
     Object2D_Translate(uint16_t x, uint16_t y, uint16_t width, uint16_t height);

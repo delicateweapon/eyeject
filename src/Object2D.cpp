@@ -25,10 +25,8 @@ void Object2D_Translate::set_position(Point2D &p)
 
 void Object2D_Translate::place_at_window_center()
 {
-    this->position.x = (App::Window::width / 2.0) - this->width;
-    this->position.y = (App::Window::height / 2.0) - this->height;
-    this->position.x = 100;
-    this->position.y = 10;
+    this->position.x = (App::Window::width - this->width) / 2.0;
+    this->position.y = (App::Window::height - this->height) / 2.0;
 }
 
 void Object2D_Translate::move_x(uint16_t delta_x)

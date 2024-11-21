@@ -35,7 +35,7 @@ void Input::keydown(SDL_KeyboardEvent &key)
         break;
 
     case SDL_SCANCODE_E:
-        cam->turn_clockwise(-0.1);
+        cam->turn_clockwise(0.1);
         break;
 
     case SDL_SCANCODE_X:
