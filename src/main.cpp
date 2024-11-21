@@ -29,6 +29,7 @@ int main()
     Camera cam0;
     cam0.set_fov(Constants::PI / 2);
     cam0.set_far_length(100);
+    cam0.set_near_length(40);
     cam0.set_look_angle(Constants::PI / 2);
     cam0.place_at_window_center();
 

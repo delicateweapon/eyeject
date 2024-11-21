@@ -19,9 +19,6 @@ public:
     void set_position(float& x, float& y);
     void set_position(Point2D &p);
 
-    void move_x(float delta_x);
-    void move_y(float delta_y);
-
     void place_at_window_center();
     void bound(Object2D_Translate& o);
 };

@@ -15,13 +15,22 @@ void Camera::update_values()
 
     this->angle1 = this->look_angle - (this->fov / 2);
     this->angle2 = this->look_angle + (this->fov / 2);
-    this->side_length = this->far_length / std::cos(this->fov / 2);
 
-    this->side1.x = this->position.x + this->side_length * std::cos(angle1);
-    this->side1.y = this->position.y + this->side_length * (-1) * std::sin(angle1);
+    this->side_far_length = this->far_length / std::cos(this->fov / 2);
 
-    this->side2.x = this->position.x + this->side_length * std::cos(angle2);
-    this->side2.y = this->position.y + this->side_length * (-1) * std::sin(angle2);
+    this->far1.x = this->position.x + this->side_far_length * std::cos(angle1);
+    this->far1.y = this->position.y + this->side_far_length * (-1) * std::sin(angle1);
+
+    this->far2.x = this->position.x + this->side_far_length * std::cos(angle2);
+    this->far2.y = this->position.y + this->side_far_length * (-1) * std::sin(angle2);
+
+    this->side_near_length = this->near_length / std::cos(this->fov / 2);
+
+    this->near1.x = this->position.x + this->side_near_length * std::cos(angle1);
+    this->near1.y = this->position.y + this->side_near_length * (-1) * std::sin(angle1);
+
+    this->near2.x = this->position.x + this->side_near_length * std::cos(angle2);
+    this->near2.y = this->position.y + this->side_near_length * (-1) * std::sin(angle2);
 }
 
 void Camera::set_fov(float fov)
@@ -78,7 +87,31 @@ void Camera::render()
 
     set_color(0xf8f2f2);
 
-    draw_line(this->position, side1);
-    draw_line(this->position, side2);
+    draw_line(this->position, this->far1);
+    draw_line(this->position, this->far2);
+
+    draw_line(this->near1, this->near2);
 }
 
+void Camera::raycast(Garden& g) 
+{
+    if (!this->bounded) {
+        return;
+    }
+    if (this->bound_parent != &g) {
+        return;
+    }
+
+    float angle = this->angle1;
+    float step_size = std::abs(angle2 - angle1) / this->segments.size();
+
+    while (angle < this->angle2) {
+        float m = std::tan(angle);
+        auto x = [](float t) { return t; };
+        auto y = [this, m](float t) { return m * (t - this->position.x) + this->position.y; };
+
+        // float t = 
+
+        angle += step_size;
+    }
+}

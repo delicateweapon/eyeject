@@ -2,6 +2,7 @@
 
 #include "Point2D.hpp"
 #include "Object2D.hpp"
+#include "Garden.hpp"
 
 #include <vector>
 
@@ -30,13 +31,16 @@ public:
 
     static void add(Camera &cam);
 
+    void raycast(Garden& g);
+
 private:
     std::vector<float> segments;
     
-    Point2D head;
-    float side_length;
+    Point2D head, near1, near2;
+    float side_far_length, side_near_length;
     float angle1, angle2;
-    Point2D side1, side2;
+    Point2D far1, far2;
+
 
     void update_values();
 };

@@ -29,42 +29,6 @@ void Object2D_Translate::place_at_window_center()
     this->position.y = (App::Window::height - this->height) / 2.0;
 }
 
-void Object2D_Translate::move_x(float delta_x)
-{
-    float new_x = this->position.x + delta_x;
-    if (new_x < 0) {
-        return;
-    }
-    if (bounded) {
-        if (new_x > this->bound_parent->width - this->width) {
-            return;
-        }
-    } else {
-        if (new_x > App::Window::width - this->width) {
-            return;
-        }
-    }
-    this->position.x = new_x;
-}
-
-void Object2D_Translate::move_y(float delta_y)
-{
-    float new_y = this->position.y + delta_y;
-    if (new_y < 0) {
-        return;
-    }
-    if (bounded) {
-        if (new_y > this->bound_parent->height - this->height) {
-            return;
-        }
-    } else {
-        if (new_y > App::Window::height - this->height) {
-            return;
-        }
-    }
-    this->position.y = new_y;
-}
-
 void Object2D_Translate::bound(Object2D_Translate &o)
 {
     this->bound_parent = &o;
