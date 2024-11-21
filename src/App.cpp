@@ -84,4 +84,8 @@ void App::update()
         cam->render();
     }
     SDL_RenderPresent(renderer);    
+    Camera *c = Camera::selected;
+    Garden *g = Garden::gardens[0];
+    c->raycast(*g);
+            SDL_RenderPresent(renderer);    
 }

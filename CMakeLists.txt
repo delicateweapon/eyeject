@@ -15,6 +15,7 @@ set(SOURCE_FILES
     src/Camera.cpp
     src/Garden.cpp
     src/Console.cpp
+    src/Util.cpp
 )
 
 set(HEADER_FILES

@@ -50,7 +50,7 @@ void Camera::set_near_length(float near_length)
 
 void Camera::set_segments(size_t segments)
 {
-    this->segments.reserve(segments);
+    this->segments.assign(segments, 0);
 }
 
 size_t Camera::get_segments()
@@ -91,9 +91,10 @@ void Camera::render()
     draw_line(this->position, this->far2);
 
     draw_line(this->near1, this->near2);
+    draw_line(this->far1, this->far2);
 }
 
-void Camera::raycast(Garden& g) 
+void Camera::raycast(Garden &g)
 {
     if (!this->bounded) {
         return;
@@ -102,15 +103,37 @@ void Camera::raycast(Garden& g)
         return;
     }
 
+    this->update_values();
+
+    float step_size = (this->angle2 - this->angle1) / this->segments.size();
     float angle = this->angle1;
-    float step_size = std::abs(angle2 - angle1) / this->segments.size();
 
-    while (angle < this->angle2) {
-        float m = std::tan(angle);
-        auto x = [](float t) { return t; };
-        auto y = [this, m](float t) { return m * (t - this->position.x) + this->position.y; };
+    float near, far, r;
+    float sin_a, cos_a;
+    float x, y;
 
-        // float t = 
+    App::set_color(0xffffff);
+    while (angle < angle2) {
+        sin_a = sin(angle);
+        cos_a = cos(angle);
+
+        near = this->near_length / sin_a;
+        far = this->far_length / sin_a;
+
+        r = near;
+        while (r < far) {
+            x = this->position.x + r * cos_a;
+            y = this->position.y + (-1) * r * sin_a;
+
+            App::draw_line(this->position.x, this->position.y, x, y);
+
+            bool occupied = g.check_occupancy(x, y);
+            if (occupied) {
+                break;
+            }
+
+            r += g.tile_size / 2;
+        }
 
         angle += step_size;
     }

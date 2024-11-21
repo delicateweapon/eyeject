@@ -1,5 +1,6 @@
 #include "Object2D.hpp"
 #include "App.hpp"
+#include "constants.hpp"
 
 #include <cmath>
 #include <cstdint>
@@ -38,18 +39,19 @@ void Object2D_Translate::bound(Object2D_Translate &o)
 void Object2D::set_look_angle(float look_angle)
 {
     this->look_angle = look_angle;
+    App::Util::angle_abs(look_angle);
 }
 
 void Object2D::turn_anticlockwise(float delta_t)
 {
     this->look_angle += delta_t;
-    /* TODO */
+    App::Util::angle_abs(look_angle);
 }
 
 void Object2D::turn_clockwise(float delta_t)
 {
     this->look_angle -= delta_t;
-    /* TODO */
+    App::Util::angle_abs(look_angle);
 }
 
 void Object2D::move(float distance, Direction d)

@@ -2,9 +2,9 @@
 #include "App.hpp"
 
 #include <SDL3/SDL_rect.h>
+#include <cmath>
 #include <cstddef>
 #include <cstdlib>
-#include <cmath>
 
 std::vector<Garden *> Garden::gardens;
 
@@ -23,7 +23,7 @@ Garden::Garden(float x, float y, uint16_t width, uint16_t height, uint16_t tile_
 
     this->row_count = std::ceil((float)height / tile_size);
     this->col_count = std::ceil((float)width / tile_size);
-    
+
     this->tile_count = this->row_count * this->col_count;
     this->occupied.assign(this->tile_count, false);
 }
@@ -45,7 +45,6 @@ void Garden::surround_with_walls()
         this->occupied[this->col_count * i - 1] = true;
         ++i;
     }
-
 }
 
 void Garden::render()
@@ -68,4 +67,16 @@ void Garden::render()
             SDL_RenderFillRect(App::renderer, &r);
         }
     }
+}
+
+bool Garden::check_occupancy(float x, float y)
+{
+    if (x < this->position.x || y < this->position.y || x > this->width + this->position.x || y > this->height + this->position.y) {
+        return false;
+    }
+
+    size_t col_i = ((size_t)(x - this->position.x) / this->tile_size);
+    size_t row_i = ((size_t)(y - this->position.y) / this->tile_size);
+
+    return this->occupied[row_i * this->col_count + col_i];
 }

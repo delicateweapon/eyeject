@@ -30,7 +30,8 @@ int main()
     cam0.set_fov(Constants::PI / 2);
     cam0.set_far_length(100);
     cam0.set_near_length(40);
-    cam0.set_look_angle(Constants::PI / 2);
+    cam0.set_look_angle(- Constants::PI / 2);
+    cam0.set_segments(10);
     cam0.place_at_window_center();
 
     Camera::add(cam0);
