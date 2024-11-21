@@ -39,7 +39,7 @@ void Object2D_Translate::bound(Object2D_Translate &o)
 void Object2D::set_look_angle(float look_angle)
 {
     this->look_angle = look_angle;
-    App::Util::angle_abs(look_angle);
+    App::Util::angle_abs(this->look_angle);
 }
 
 void Object2D::turn_anticlockwise(float delta_t)
