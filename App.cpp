@@ -1,5 +1,6 @@
 #include "App.hpp"
 #include "Camera.hpp"
+#include "Garden.hpp"
 
 #include <SDL3/SDL_init.h>
 
@@ -76,6 +77,7 @@ void App::run()
 void App::update() 
 {
     set_window_color(Window::default_color);
+    Garden::area_render();
     for (Camera *cam: Camera::cameras) {
         cam->render();
     }
