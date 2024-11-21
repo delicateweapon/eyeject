@@ -1,0 +1,65 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "Clang",
+	"compiler-simulate-id" : "",
+	"config" : "Debug",
+	"cxx-modules" : {},
+	"database-info" : null,
+	"dir-cur-bld" : "/home/delicateweapon/docs/eyeject/build",
+	"dir-cur-src" : "/home/delicateweapon/docs/eyeject",
+	"dir-top-bld" : "/home/delicateweapon/docs/eyeject/build",
+	"dir-top-src" : "/home/delicateweapon/docs/eyeject",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"/home/delicateweapon/docs/eyeject/include"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "/home/delicateweapon/docs/eyeject/build/CMakeFiles/eyeject.dir",
+	"sources" : 
+	{
+		"CMakeFiles/eyeject.dir/App.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/delicateweapon/docs/eyeject/App.cpp"
+		},
+		"CMakeFiles/eyeject.dir/Camera.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/delicateweapon/docs/eyeject/Camera.cpp"
+		},
+		"CMakeFiles/eyeject.dir/Color.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/delicateweapon/docs/eyeject/Color.cpp"
+		},
+		"CMakeFiles/eyeject.dir/Draw.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/delicateweapon/docs/eyeject/Draw.cpp"
+		},
+		"CMakeFiles/eyeject.dir/Garden.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/delicateweapon/docs/eyeject/Garden.cpp"
+		},
+		"CMakeFiles/eyeject.dir/Input.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/delicateweapon/docs/eyeject/Input.cpp"
+		},
+		"CMakeFiles/eyeject.dir/Point2D.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/delicateweapon/docs/eyeject/Point2D.cpp"
+		},
+		"CMakeFiles/eyeject.dir/main.cpp.o" : 
+		{
+			"language" : "CXX",
+			"source" : "/home/delicateweapon/docs/eyeject/main.cpp"
+		}
+	}
+}

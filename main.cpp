@@ -10,21 +10,25 @@
 #endif
 
 #include <thread>
-#include <format>
 
-void *console_func(void *args) {
+void *console_func(void *args)
+{
     bool quit = false;
+    App::Camera *Cam0;
+    char output[256];
 
 #ifdef _WIN32
 
     while (!quit) {
-        App::Camera *cam0 = App::Camera::selected;
+        Cam0 = App::Camera::selected;
 
-        std::string output = std::format("Camera: Cam0\n"
-                                         "Position: (.x = %f, .y = %f)\n"
-                                         "Look Angle: %f radians\n"
-                                         "FOV: %f radians\n",
-                                         cam0->position.x, cam0->position.y, cam0->look_angle, cam0->fov);
+        sprintf(output,
+            "Camera: Cam0\n"
+            "Position: (.x = %f, .y = %f)\n"
+            "Look Angle: %f radians\n"
+            "FOV: %f radians\n",
+            Cam0->position.x, Cam0->position.y, Cam0->look_angle, Cam0->fov);
+
         if (GetAsyncKeyState('Q')) {
             quit = true;
         }
@@ -39,28 +43,27 @@ void *console_func(void *args) {
 
     int ch;
 
-    App::Camera *cam0;
-
     while (!quit) {
         clear();
 
-        cam0 = App::Camera::selected;
+        Cam0 = App::Camera::selected;
 
-        std::string output = std::format("Camera: Cam0\n"
-                                         "Position: (.x = %f, .y = %f)\n"
-                                         "Look Angle: %f radians\n"
-                                         "FOV: %f radians\n",
-                                         cam0->position.x, cam0->position.y, cam0->look_angle, cam0->fov);
+        sprintf(output,
+            "Camera: Cam0\n"
+            "Position: (.x = %f, .y = %f)\n"
+            "Look Angle: %f radians\n"
+            "FOV: %f radians\n",
+            Cam0->position.x, Cam0->position.y, Cam0->look_angle, Cam0->fov);
 
-        printw("%s", output.c_str());
+        printw("%s", output);
 
         ch = getch();
         switch (ch) {
-            case 'Q' - 'A' + 1:
-                quit = true;
-                break;
-            default:
-                break;
+        case 'Q' - 'A' + 1:
+            quit = true;
+            break;
+        default:
+            break;
         }
     }
 
@@ -70,7 +73,8 @@ void *console_func(void *args) {
     return nullptr;
 }
 
-int main() {
+int main()
+{
     using namespace App;
 
     if (init() < 0) {
@@ -97,7 +101,6 @@ int main() {
 
     Camera::add(cam0);
     Camera::select(cam0);
-
 
     Garden::area_init();
 

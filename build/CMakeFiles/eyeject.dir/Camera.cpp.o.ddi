@@ -1,0 +1,9 @@
+{
+  "revision": 0,
+  "rules": [
+    {
+      "primary-output": "CMakeFiles/eyeject.dir/Camera.cpp.o"
+    }
+  ],
+  "version": 1
+}
