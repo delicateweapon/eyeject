@@ -10,16 +10,20 @@ public:
     uint16_t width = 0;
     uint16_t height = 0;
 
-    Object2D_Translate() = default;
-    Object2D_Translate(uint16_t x, uint16_t y, uint16_t width, uint16_t height);
+    bool bounded = false;
+    Object2D_Translate *bound_parent;
 
-    void set_position(uint16_t& x, uint16_t& y);
+    Object2D_Translate() = default;
+    Object2D_Translate(float x, float y, uint16_t width, uint16_t height);
+
+    void set_position(float& x, float& y);
     void set_position(Point2D &p);
 
-    void move_x(uint16_t delta_x);
-    void move_y(uint16_t delta_y);
+    void move_x(float delta_x);
+    void move_y(float delta_y);
 
     void place_at_window_center();
+    void bound(Object2D_Translate& o);
 };
 
 typedef enum {

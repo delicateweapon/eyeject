@@ -1,17 +1,17 @@
 #include "Object2D.hpp"
 #include "App.hpp"
 
-#include <cstdint>
 #include <cmath>
+#include <cstdint>
 
-Object2D_Translate::Object2D_Translate(uint16_t x, uint16_t y, uint16_t width, uint16_t height)
+Object2D_Translate::Object2D_Translate(float x, float y, uint16_t width, uint16_t height)
 {
     this->position = Point2D(x, y);
     this->width = width;
     this->height = height;
 }
 
-void Object2D_Translate::set_position(uint16_t &x, uint16_t &y)
+void Object2D_Translate::set_position(float &x, float &y)
 {
     this->position.x = x;
     this->position.y = y;
@@ -29,32 +29,51 @@ void Object2D_Translate::place_at_window_center()
     this->position.y = (App::Window::height - this->height) / 2.0;
 }
 
-void Object2D_Translate::move_x(uint16_t delta_x)
+void Object2D_Translate::move_x(float delta_x)
 {
-    int16_t new_x = this->position.x + delta_x;
+    float new_x = this->position.x + delta_x;
     if (new_x < 0) {
         return;
     }
-    if (new_x > App::Window::width - this->width) {
-        return;
+    if (bounded) {
+        if (new_x > this->bound_parent->width - this->width) {
+            return;
+        }
+    } else {
+        if (new_x > App::Window::width - this->width) {
+            return;
+        }
     }
     this->position.x = new_x;
 }
 
-void Object2D_Translate::move_y(uint16_t delta_y)
+void Object2D_Translate::move_y(float delta_y)
 {
-    int16_t new_y = this->position.y + delta_y;
+    float new_y = this->position.y + delta_y;
     if (new_y < 0) {
         return;
     }
-    if (new_y > App::Window::height - this->height) {
-        return;
+    if (bounded) {
+        if (new_y > this->bound_parent->height - this->height) {
+            return;
+        }
+    } else {
+        if (new_y > App::Window::height - this->height) {
+            return;
+        }
     }
     this->position.y = new_y;
 }
 
-void Object2D::set_look_angle(float look_angle) {
-    this->look_angle = look_angle;    
+void Object2D_Translate::bound(Object2D_Translate &o)
+{
+    this->bound_parent = &o;
+    this->bounded = true;
+}
+
+void Object2D::set_look_angle(float look_angle)
+{
+    this->look_angle = look_angle;
 }
 
 void Object2D::turn_anticlockwise(float delta_t)
@@ -71,25 +90,47 @@ void Object2D::turn_clockwise(float delta_t)
 
 void Object2D::move(float distance, Direction d)
 {
+    static float new_x, new_y;
+
     switch (d) {
     case FORWARD:
-        this->position.x += distance * std::cos(this->look_angle);
-        this->position.y += distance * (-1) * std::sin(this->look_angle);
+        new_x = this->position.x + distance * std::cos(this->look_angle);
+        new_y = this->position.y + distance * (-1) * std::sin(this->look_angle);
         break;
 
     case BACKWARD:
-        this->position.x -= distance * std::cos(this->look_angle);
-        this->position.y -= distance * (-1) * std::sin(this->look_angle);
+        new_x = this->position.x - distance * std::cos(this->look_angle);
+        new_y = this->position.y - distance * (-1) * std::sin(this->look_angle);
         break;
 
     case RIGHT:
-        this->position.x += distance * std::sin(this->look_angle);
-        this->position.y += distance * (-1) * std::cos(this->look_angle);
+        new_x = this->position.x + distance * std::sin(this->look_angle);
+        new_y = this->position.y + distance * (-1) * std::cos(this->look_angle);
         break;
 
     case LEFT:
-        this->position.x -= distance * std::sin(this->look_angle);
-        this->position.y -= distance * (-1) * std::cos(this->look_angle);
+        new_x = this->position.x - distance * std::sin(this->look_angle);
+        new_y = this->position.y - distance * (-1) * std::cos(this->look_angle);
         break;
     }
+
+    Object2D_Translate &parent = this->bound_parent[0];
+    if (bounded) {
+        if (new_x < parent.position.x || new_y < parent.position.y) {
+            return;
+        }
+        if (new_x - parent.position.x > parent.width - this->width || new_y - parent.position.y > parent.height - this->height) {
+            return;
+        }
+    } else {
+        if (new_x < 0 || new_y < 0) {
+            return;
+        }
+        if (new_x > App::Window::width - this->width || new_y > App::Window::height - this->height) {
+            return;
+        }
+    }
+
+    this->position.x = new_x;
+    this->position.y = new_y;
 }

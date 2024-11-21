@@ -13,7 +13,7 @@ void Garden::add(Garden &g)
     gardens.push_back(&g);
 }
 
-Garden::Garden(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t tile_size)
+Garden::Garden(float x, float y, uint16_t width, uint16_t height, uint16_t tile_size)
 {
     this->position.x = x;
     this->position.y = y;

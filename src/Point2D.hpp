@@ -7,11 +7,11 @@ public:
 
 class Point2D {
 public:
-    float x;
-    float y;
+    float x = 0;
+    float y = 0;
     float w; /* always 1 */
 
-    Point2D();
+    Point2D() = default;
     Point2D(float x, float y);
 
     float magnitude_squared();
