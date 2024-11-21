@@ -14,18 +14,26 @@ void *console_func(void *args)
     char output[256];
 
 #ifdef _WIN32
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD coord = {0, 0};
+    DWORD written;
 
     while (!quit) {
         Cam0 = App::Camera::selected;
 
-        sprintf(output,
+        std::sprintf(output,
             "Camera: Cam0\n"
             "Position: (.x = %f, .y = %f)\n"
             "Look Angle: %f radians\n"
             "FOV: %f radians\n",
             Cam0->position.x, Cam0->position.y, Cam0->look_angle, Cam0->fov);
 
-        if (GetAsyncKeyState('Q')) {
+        FillConsoleOutputCharacter(hConsole, ' ', 80 * 25, coord, &written);
+        SetConsoleCursorPosition(hConsole, coord);
+
+        std::printf("%s", output);
+
+        if (GetAsyncKeyState('Q') & 0x8000) {
             quit = true;
         }
 
@@ -43,7 +51,7 @@ void *console_func(void *args)
         clear();
         Cam0 = App::Camera::selected;
 
-        sprintf(output,
+        std::sprintf(output,
             "Camera: Cam0\n"
             "Position: (.x = %f, .y = %f)\n"
             "Look Angle: %f radians\n"
